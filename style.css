@@ -1,7 +1,7 @@
 :root {
     background-color: rgb(108, 108, 233);
-    --grid-size: 25;
-    --cell-size: 2vw;
+    --grid-size: 15;
+    --cell-size: 2.8vw;
     height: 100%;
 }
 
