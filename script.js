@@ -3,6 +3,13 @@ const size = 15;
 const rxc = size * size;
 const cells = [];
 const start = Math.floor(rxc / 2);
+const score = document.querySelector('#score');
+const timer = document.querySelector('#time');
+const coinCells =  [];
+let scorePoint = 0;
+let time = 45;
+timer.innerHTML = time;
+
 let pgIndex = start;
 
 // Creazione della griglia di celle nel DOM
@@ -38,6 +45,7 @@ function movePg(direction) {
         if (condition_1) {
             moveFn();
             movement();
+            getCoin();
         } else {
             // Ripristina la posizione precedente se il personaggio ha toccato un bordo
             pgId.classList.remove(pgView);
@@ -117,3 +125,48 @@ function clearBoard() {
         }
     });
 }
+
+
+function getCoin(){
+    if (pgId.classList.contains('coin')){
+        scorePoint++;
+        score.innerHTML = scorePoint;
+        pgId.classList.remove('coin');
+    }
+}
+
+//Gestione monete su schermo
+
+function coinSpawn() {
+    let spawnId = Math.floor(Math.random() * cells.length);
+
+    if (spawnId !== pgIndex && !cells[spawnId].classList.contains('coin')) {
+        coinCells.push(cells[spawnId]);
+        cells[spawnId].classList.add('coin');
+    } else {
+        coinSpawn();
+    }
+}
+
+
+function coinDespawn(array) {
+    if (array.lenght = 3){
+        array[0].classList.remove('coin');
+        array = array.shift();
+    }
+}
+    setTimeout(function() {
+        setInterval(function() {
+            coinDespawn(coinCells);
+        }, 1000);
+    }, 3000);
+
+
+setInterval(function(){
+    if (time > 0){
+    coinSpawn();
+    time--;
+    timer.innerHTML = time;
+    }
+},1000);
+
