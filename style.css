@@ -1,0 +1,98 @@
+:root {
+    background-color: rgb(108, 108, 233);
+    --grid-size: 25;
+    --cell-size: 2.2vw;
+    height: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.board {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.gameArea {
+    padding: 12px;
+    width: 100%;
+    text-align: center;
+}
+
+#grid {
+    width: calc(var(--cell-size) * var(--grid-size) + 4px);
+    height: calc(var(--cell-size) * var(--grid-size) + 4px);
+    border: 2px solid white;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+#grid > div {
+    display: flex;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.pgFront {
+    background-image: url(image/front-pg.png);
+}
+
+/*salire*/
+.pgUpMove {
+    opacity: 1;
+    transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
+    background-image: url(image/up-movement.png);
+}
+
+.pgUpMove.hidden {
+    opacity: 0;
+}
+
+/*scendere*/
+
+.pgDownMove{
+    opacity: 1;
+    transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
+    background-image: url(image/down-movement.png);
+}
+
+.pgDownMove.hidden {
+    opacity: 0;
+}
+
+/*Destra*/
+.pgRightMove{
+    opacity: 1;
+    transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
+    background-image: url(image/right-movement.png);
+}
+
+.pgRightMove.hidden {
+    opacity: 0;
+}
+/*Sinistra*/
+.pgLeftMove{
+    opacity: 1;
+    transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
+    background-image: url(image/left-movement.png);
+}
+
+.pgLeftMove.hidden {
+    opacity: 0;
+}
