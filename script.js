@@ -3,6 +3,7 @@ const size = 25;
 const rxc = size * size;
 const cells = [];
 const start = Math.floor(rxc / 2);
+let pgIndex = start;
 
 for (let i = 0; i < rxc; i++) {
     const cell = document.createElement('div');
@@ -10,27 +11,39 @@ for (let i = 0; i < rxc; i++) {
     grid.appendChild(cell);
 }
 
-let pgIndex = start;
 let pgId = cells[pgIndex];
+let pgView = 'pgFront'
 
-pgId.classList.add('pgFront');
+pgId.classList.add(pgView);
 
 function movePg(direction) {
-
     function animateAndMove(addClass, condition, moveFn) {
-        pgId.classList.add(addClass);
-        setTimeout(function () {
-            pgId.classList.remove(addClass);
+        return new Promise(resolve => {
+            pgId.classList.add(addClass);
+            pgId.classList.remove(pgView);
+            setTimeout(() => {
+                pgId.classList.remove(addClass);
+                resolve(condition);
+            }, 100);
+        }).then(condition => {
             if (condition) {
                 moveFn();
                 movement();
+            } else {
+                // Ripristina la posizione precedente se il personaggio ha toccato un bordo
+                pgId.classList.remove(pgView);
+                pgId.classList.add(pgView);
             }
-        }, 50);
+        });
     }
+
+    // Salva la posizione precedente
+    const prevIndex = pgIndex;
 
     switch (direction) {
         case 'ArrowUp':
         case 'KeyW':
+            pgView = 'pgBack';
             animateAndMove('pgUpMove', pgIndex - size >= 0, () => {
                 if (pgIndex - size >= 0) {
                     pgIndex -= size;
@@ -40,6 +53,7 @@ function movePg(direction) {
 
         case 'ArrowDown':
         case 'KeyS':
+            pgView = 'pgFront';
             animateAndMove('pgDownMove', pgIndex + size < rxc, () => {
                 if (pgIndex + size < rxc) {
                     pgIndex += size;
@@ -49,6 +63,7 @@ function movePg(direction) {
 
         case 'ArrowLeft':
         case 'KeyA':
+            pgView = 'pgLeft';
             animateAndMove('pgLeftMove', pgIndex % size !== 0, () => {
                 if (pgIndex % size !== 0) {
                     pgIndex -= 1;
@@ -58,6 +73,7 @@ function movePg(direction) {
 
         case 'ArrowRight':
         case 'KeyD':
+            pgView = 'pgRight';
             animateAndMove('pgRightMove', (pgIndex + 1) % size !== 0, () => {
                 if ((pgIndex + 1) % size !== 0) {
                     pgIndex += 1;
@@ -76,19 +92,18 @@ document.addEventListener('keydown', function (event) {
 });
 
 
+
 function movement() {
     pgId = cells[pgIndex];
-    pgId.classList.add('pgFront');
+    pgId.classList.add(pgView);
     clearBoard();
 }
 
-//rimuovi da tutte le cella tranne quella corrente le classi
 function clearBoard() {
     cells.forEach((element, index) => {
-        const classesToRemove = ['pgRightMove', 'pgLeftMove', 'pgUpMove', 'pgDownMove', 'pgFront'];
+        const classesToRemove = ['pgRightMove', 'pgLeftMove', 'pgUpMove', 'pgDownMove', 'pgFront', 'pgBack', 'pgLeft', 'pgRight'];
         if (index !== pgIndex) {
             classesToRemove.forEach(className => element.classList.remove(className));
         }
     });
 }
-
