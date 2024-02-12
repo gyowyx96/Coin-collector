@@ -1,0 +1,72 @@
+/*############Sprite############*/
+
+#grid > div {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain ;
+}
+/*salire*/
+.pgUpMove {
+    opacity: 1;
+    transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
+    background-image: url(up-movement.png);
+}
+
+.pgUpMove.hidden {
+    opacity: 0;
+}
+
+.pgBack {
+    background-image: url(back-view.png);
+}
+
+/*scendere*/
+.pgDownMove{
+    opacity: 1;
+    transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
+    background-image: url(down-movement.png);
+}
+
+.pgDownMove.hidden {
+    opacity: 0;
+}
+
+.pgFront{
+    background-image: url(front-view.png);
+}
+
+/*Destra*/
+.pgRightMove{
+    opacity: 1;
+    transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
+    background-image: url(right-movement.png);
+}
+
+.pgRightMove.hidden {
+    opacity: 0;
+}
+
+.pgRight{
+    background-image: url(right-view.png);
+}
+
+/*Sinistra*/
+.pgLeftMove{
+    opacity: 1;
+    transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
+    background-image: url(left-movement.png);
+}
+
+.pgLeftMove.hidden {
+    opacity: 0;
+}
+
+.pgLeft{
+    background-image: url(left-view.png);
+}
+
+.coin {
+    background-image: url(coin.png);
+}
