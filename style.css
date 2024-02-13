@@ -68,3 +68,25 @@ h3 {
 h1 {
     margin-bottom: 2vw;
 }
+
+#life {
+    margin-top: 20px;
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+ #life h3 {
+    margin-bottom: 0;
+    margin-right: 10px;
+} 
+
+.life-cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    background-image: url(image/heart.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: 5px; 
+}
