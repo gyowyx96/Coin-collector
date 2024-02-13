@@ -15,8 +15,7 @@ let time = 25;
 score.innerHTML = scorePoint;
 timer.innerHTML = time;
 let pgIndex = start;
-let pgId = cells[pgIndex];
-let pgView = 'pgFront' 
+
 
 // Creazione della griglia di celle nel DOM
 for (let i = 0; i < rxc; i++) {
@@ -26,6 +25,8 @@ for (let i = 0; i < rxc; i++) {
 }
 
 // Inizializzazione del personaggio alla posizione di partenza
+let pgId = cells[pgIndex];
+let pgView = 'pgFront' 
 pgId.classList.add(pgView);// Direzione iniziale del personaggio
 
 // Funzione per gestire il movimento del personaggio
