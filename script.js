@@ -6,8 +6,10 @@ const start = Math.floor(rxc / 2);
 const score = document.querySelector('#score');
 const timer = document.querySelector('#time');
 const coinCells =  [];
+const bombCounter = [];
 let scorePoint = 0;
-let time = 45;
+let time = 25;
+score.innerHTML = scorePoint;
 timer.innerHTML = time;
 
 let pgIndex = start;
@@ -46,6 +48,7 @@ function movePg(direction) {
             moveFn();
             movement();
             getCoin();
+            hitBomb();
         } else {
             // Ripristina la posizione precedente se il personaggio ha toccato un bordo
             pgId.classList.remove(pgView);
@@ -132,6 +135,7 @@ function getCoin(){
         scorePoint++;
         score.innerHTML = scorePoint;
         pgId.classList.remove('coin');
+        /* pgId.classList.add('glow') */
     }
 }
 
@@ -139,8 +143,9 @@ function getCoin(){
 
 function coinSpawn() {
     let spawnId = Math.floor(Math.random() * cells.length);
+    coinDespawn(coinCells);
 
-    if (spawnId !== pgIndex && !cells[spawnId].classList.contains('coin')) {
+    if (spawnId !== pgIndex && !cells[spawnId].classList.contains('coin') && !cells[spawnId].classList.contains('bomb')) {
         coinCells.push(cells[spawnId]);
         cells[spawnId].classList.add('coin');
     } else {
@@ -150,23 +155,55 @@ function coinSpawn() {
 
 
 function coinDespawn(array) {
-    if (array.lenght = 3){
+    if (array.length >= 4){
         array[0].classList.remove('coin');
         array = array.shift();
     }
 }
-    setTimeout(function() {
-        setInterval(function() {
-            coinDespawn(coinCells);
-        }, 1000);
-    }, 3000);
-
 
 setInterval(function(){
     if (time > 0){
     coinSpawn();
+    bombSpawn();
     time--;
     timer.innerHTML = time;
     }
+    else{
+        cells.forEach((element, index) => {
+            const classesToRemove = ['coin', 'bomb'];
+            if (index !== pgIndex) {
+                classesToRemove.forEach(className => element.classList.remove(className));
+            }
+        });
+
+    }
 },1000);
 
+//setting bombs
+
+function bombSpawn() {
+    let bombId = Math.floor(Math.random() * cells.length);
+
+    if (bombCounter.length >= 10) {
+        bombCounter[0].classList.remove('bomb');
+        bombCounter.shift();
+    }
+
+
+    if (bombId !== pgIndex && !cells[bombId].classList.contains('coin') && !cells[bombId].classList.contains('bomb')) {
+        bombCounter.push(cells[bombId]);
+        console.log(bombCounter.length);
+        cells[bombId].classList.add('bomb');
+    } else {
+        bombSpawn();
+    }
+}
+
+
+function hitBomb() {
+    if (pgId.classList.contains('bomb')) {
+        pgId.classList.remove('bomb');
+        console.log('Bomba colpita -1hp');
+        // Gestione vite
+    }
+}

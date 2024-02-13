@@ -70,3 +70,7 @@
 .coin {
     background-image: url(coin.png);
 }
+
+.bomb{
+    background-image: url(bomb.png);
+}
