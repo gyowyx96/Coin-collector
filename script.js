@@ -10,6 +10,7 @@ const lifePool = document.querySelector('#life');
 const lifeToRemove = Array.from(lifePool.querySelectorAll('.life-cell'));
 const coinCells =  [];
 const bombCounter = [];
+
 let scorePoint = 0;
 let time = 25;
 score.innerHTML = scorePoint;
@@ -110,9 +111,10 @@ function movePg(direction) {
 }
 
 // Aggiungta di un listener per gestire i tasti premuti
-document.addEventListener('keydown', function (event) {
+const keyDownHandler = function(event) {
     movePg(event.code);
-});
+}
+document.addEventListener('keydown', keyDownHandler);
 
 // Funzione chiamata dopo il movimento per aggiornare l'aspetto del personaggio
 function movement() {
@@ -198,7 +200,7 @@ function bombSpawn() {
     }
 }
 
-setInterval(function(){
+const gameInterval = setInterval(function(){
     if (time > 0){
     coinSpawn();
     bombSpawn();
@@ -218,4 +220,8 @@ function gameOver(){
             classesToRemove.forEach(className => element.classList.remove(className));
         }
     });
+    document.removeEventListener('keydown', keyDownHandler);
+    pgId.classList.remove(pgView);
+    showAlert('Game Over!');
+    clearInterval(gameInterval);
 }

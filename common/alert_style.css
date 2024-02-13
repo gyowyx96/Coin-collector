@@ -1,0 +1,26 @@
+.game-alert {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 300px;
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Assicurati che sia su uno z-index superiore rispetto agli altri elementi sulla pagina */
+}
+  
+  /* Stile per il messaggio di alert */
+  .game-alert-message { 
+    color: red;   
+    font-size: 35px;
+    padding: 10px;
+    background-color: white;
+    cursor: pointer;
+  }
+  
+  .game-alert-message:hover {
+    border: 3px solid blue;
+  }
+  

@@ -11,7 +11,7 @@
 .pgUpMove {
     opacity: 1;
     transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
-    background-image: url(up-movement.png);
+    background-image: url(../image/up-movement.png);
 }
 
 .pgUpMove.hidden {
@@ -19,14 +19,14 @@
 }
 
 .pgBack {
-    background-image: url(back-view.png);
+    background-image: url(../image/back-view.png);
 }
 
 /*scendere*/
 .pgDownMove{
     opacity: 1;
     transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
-    background-image: url(down-movement.png);
+    background-image: url(../image/down-movement.png);
 }
 
 .pgDownMove.hidden {
@@ -34,14 +34,14 @@
 }
 
 .pgFront{
-    background-image: url(front-view.png);
+    background-image: url(../image/front-view.png);
 }
 
 /*Destra*/
 .pgRightMove{
     opacity: 1;
     transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
-    background-image: url(right-movement.png);
+    background-image: url(../image/right-movement.png);
 }
 
 .pgRightMove.hidden {
@@ -49,14 +49,14 @@
 }
 
 .pgRight{
-    background-image: url(right-view.png);
+    background-image: url(../image/right-view.png);
 }
 
 /*Sinistra*/
 .pgLeftMove{
     opacity: 1;
     transition: opacity 0.75s ease; /* Transizione di 0.75 secondi */
-    background-image: url(left-movement.png);
+    background-image: url(../image/left-movement.png);
 }
 
 .pgLeftMove.hidden {
@@ -64,13 +64,13 @@
 }
 
 .pgLeft{
-    background-image: url(left-view.png);
+    background-image: url(../image/left-view.png);
 }
 
 .coin {
-    background-image: url(coin.png);
+    background-image: url(../image/coin.png);
 }
 
 .bomb{
-    background-image: url(bomb.png);
+    background-image: url(../image/bomb.png);
 }
