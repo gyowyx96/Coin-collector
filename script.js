@@ -1,3 +1,4 @@
+//Inizializzazione variabili//
 const grid = document.querySelector('#grid');
 const size = 15;
 const rxc = size * size;
@@ -5,14 +6,17 @@ const cells = [];
 const start = Math.floor(rxc / 2);
 const score = document.querySelector('#score');
 const timer = document.querySelector('#time');
+const lifePool = document.querySelector('#life');
+const lifeToRemove = Array.from(lifePool.querySelectorAll('.life-cell'));
 const coinCells =  [];
 const bombCounter = [];
 let scorePoint = 0;
 let time = 25;
 score.innerHTML = scorePoint;
 timer.innerHTML = time;
-
 let pgIndex = start;
+let pgId = cells[pgIndex];
+let pgView = 'pgFront' 
 
 // Creazione della griglia di celle nel DOM
 for (let i = 0; i < rxc; i++) {
@@ -22,9 +26,6 @@ for (let i = 0; i < rxc; i++) {
 }
 
 // Inizializzazione del personaggio alla posizione di partenza
-let pgId = cells[pgIndex];
-let pgView = 'pgFront' 
-
 pgId.classList.add(pgView);// Direzione iniziale del personaggio
 
 // Funzione per gestire il movimento del personaggio
@@ -107,7 +108,7 @@ function movePg(direction) {
     }
 }
 
-// Aggiungi un listener per gestire i tasti premuti
+// Aggiungta di un listener per gestire i tasti premuti
 document.addEventListener('keydown', function (event) {
     movePg(event.code);
 });
@@ -129,7 +130,7 @@ function clearBoard() {
     });
 }
 
-
+//interazione con elementi di gioco
 function getCoin(){
     if (pgId.classList.contains('coin')){
         scorePoint++;
@@ -139,8 +140,29 @@ function getCoin(){
     }
 }
 
-//Gestione monete su schermo
+function hitBomb() {
+    if (pgId.classList.contains('bomb')) {
+        pgId.classList.remove('bomb');
+        looseLife();
+    }
+}
 
+function looseLife(){
+    if(lifeToRemove.length > 1){
+        const removedElement = lifeToRemove.pop();
+        removedElement.remove();
+    }
+    else{
+        const removedElement = lifeToRemove.pop();
+        removedElement.remove();
+        time = 0
+        timer.innerHTML = time;
+        gameOver();
+        //aggiungi l'alert a schermo
+    }
+}
+
+//Gestione elementi su schermo
 function coinSpawn() {
     let spawnId = Math.floor(Math.random() * cells.length);
     coinDespawn(coinCells);
@@ -153,11 +175,25 @@ function coinSpawn() {
     }
 }
 
-
 function coinDespawn(array) {
     if (array.length >= 4){
         array[0].classList.remove('coin');
         array = array.shift();
+    }
+}
+
+function bombSpawn() {
+    let bombId = Math.floor(Math.random() * cells.length);
+
+    if (bombCounter.length >= 10) {
+        bombCounter[0].classList.remove('bomb');
+        bombCounter.shift();
+    }
+    if (bombId !== pgIndex && !cells[bombId].classList.contains('coin') && !cells[bombId].classList.contains('bomb')) {
+        bombCounter.push(cells[bombId]);
+        cells[bombId].classList.add('bomb');
+    } else {
+        bombSpawn();
     }
 }
 
@@ -169,41 +205,16 @@ setInterval(function(){
     timer.innerHTML = time;
     }
     else{
-        cells.forEach((element, index) => {
-            const classesToRemove = ['coin', 'bomb'];
-            if (index !== pgIndex) {
-                classesToRemove.forEach(className => element.classList.remove(className));
-            }
-        });
-
+        gameOver();
     }
 },1000);
 
-//setting bombs
-
-function bombSpawn() {
-    let bombId = Math.floor(Math.random() * cells.length);
-
-    if (bombCounter.length >= 10) {
-        bombCounter[0].classList.remove('bomb');
-        bombCounter.shift();
-    }
-
-
-    if (bombId !== pgIndex && !cells[bombId].classList.contains('coin') && !cells[bombId].classList.contains('bomb')) {
-        bombCounter.push(cells[bombId]);
-        console.log(bombCounter.length);
-        cells[bombId].classList.add('bomb');
-    } else {
-        bombSpawn();
-    }
-}
-
-
-function hitBomb() {
-    if (pgId.classList.contains('bomb')) {
-        pgId.classList.remove('bomb');
-        console.log('Bomba colpita -1hp');
-        // Gestione vite
-    }
+// game over function and alert
+function gameOver(){
+    cells.forEach((element, index) => {
+        const classesToRemove = ['coin', 'bomb'];
+        if (index !== pgIndex) {
+            classesToRemove.forEach(className => element.classList.remove(className));
+        }
+    });
 }
