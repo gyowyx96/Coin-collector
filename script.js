@@ -7,9 +7,13 @@ const start = Math.floor(rxc / 2);
 const score = document.querySelector('#score');
 const timer = document.querySelector('#time');
 const lifePool = document.querySelector('#life');
-const lifeToRemove = Array.from(lifePool.querySelectorAll('.life-cell'));
 const coinCells =  [];
 const bombCounter = [];
+const bonusCounter = [];
+const bonusList = ['hp','time'];
+let lifeToRemove = Array.from(lifePool.querySelectorAll('.life-cell'));
+let bonusOnBoard = false;
+let currentBonus = ''; 
 
 let scorePoint = 0;
 let time = 25;
@@ -51,7 +55,6 @@ function movePg(direction) {
             moveFn();
             movement();
             getCoin();
-            hitBomb();
         } else {
             // Ripristina la posizione precedente se il personaggio ha toccato un bordo
             pgId.classList.remove(pgView);
@@ -138,20 +141,31 @@ function getCoin(){
     if (pgId.classList.contains('coin')){
         scorePoint++;
         score.innerHTML = scorePoint;
-        pgId.classList.remove('coin');
+        pgId.classList.remove('coin');        
         /* pgId.classList.add('glow') */
     }
-}
-
-function hitBomb() {
+    if (pgId.classList.contains('hp')){
+        const newLifeCell = document.createElement('div')
+        newLifeCell.classList.add('life-cell');
+        lifePool.appendChild(newLifeCell);
+        lifeToRemove = Array.from(lifePool.querySelectorAll('.life-cell'));
+        pgId.classList.remove('hp');
+        bonusOnBoard = false;
+    }
+    if (pgId.classList.contains('time')){
+        time = time + 10;
+        timer.innerHTML = time;
+        pgId.classList.remove('time')
+        bonusOnBoard = false;
+    }
     if (pgId.classList.contains('bomb')) {
         pgId.classList.remove('bomb');
-        looseLife();
+        loseLife();
     }
 }
 
-function looseLife(){
-    if(lifeToRemove.length > 1){
+function loseLife(){
+    if (lifeToRemove.length > 1) {
         const removedElement = lifeToRemove.pop();
         removedElement.remove();
     }
@@ -167,12 +181,12 @@ function looseLife(){
 
 //Gestione elementi su schermo
 function coinSpawn() {
-    let spawnId = Math.floor(Math.random() * cells.length);
+    let i = Math.floor(Math.random() * cells.length);
     coinDespawn(coinCells);
 
-    if (spawnId !== pgIndex && !cells[spawnId].classList.contains('coin') && !cells[spawnId].classList.contains('bomb')) {
-        coinCells.push(cells[spawnId]);
-        cells[spawnId].classList.add('coin');
+    if (cells[i].classList.length === 0) {
+        coinCells.push(cells[i]);
+        cells[i].classList.add('coin');
     } else {
         coinSpawn();
     }
@@ -186,15 +200,15 @@ function coinDespawn(array) {
 }
 
 function bombSpawn() {
-    let bombId = Math.floor(Math.random() * cells.length);
+    let i = Math.floor(Math.random() * cells.length);
 
     if (bombCounter.length >= 10) {
         bombCounter[0].classList.remove('bomb');
         bombCounter.shift();
     }
-    if (bombId !== pgIndex && !cells[bombId].classList.contains('coin') && !cells[bombId].classList.contains('bomb')) {
-        bombCounter.push(cells[bombId]);
-        cells[bombId].classList.add('bomb');
+    if (cells[i].classList.length === 0) {
+        bombCounter.push(cells[i]);
+        cells[i].classList.add('bomb');
     } else {
         bombSpawn();
     }
@@ -215,13 +229,47 @@ const gameInterval = setInterval(function(){
 // game over function and alert
 function gameOver(){
     cells.forEach((element, index) => {
-        const classesToRemove = ['coin', 'bomb'];
+        const classesToRemove = ['coin', 'bomb', 'hp', 'time'];
         if (index !== pgIndex) {
             classesToRemove.forEach(className => element.classList.remove(className));
         }
     });
     document.removeEventListener('keydown', keyDownHandler);
-    pgId.classList.remove(pgView);
+    pgId.className = '';
     showAlert('Game Over!');
     clearInterval(gameInterval);
+    clearInterval(addBonus);
+    clearInterval(removeBonus);
 }
+
+function plusBonus() {
+    let i = Math.floor(Math.random() * cells.length);
+    let z = Math.floor(Math.random() * bonusList.length)
+    currentBonus = bonusList[z];
+    console.log(currentBonus);
+
+    if (cells[i].classList.length === 0) {
+        bonusCounter.push(cells[i]);
+        cells[i].classList.add(currentBonus);
+    }
+}
+
+const addBonus = setInterval(function(){    
+    if(!bonusOnBoard){
+        plusBonus();
+        bonusOnBoard = true;
+    }
+},5000);
+
+ function bonusDespawn(){
+    if (bonusOnBoard && bonusCounter.length > 0){
+        let asd = bonusCounter.pop();
+        asd.classList.remove(currentBonus);
+        bonusOnBoard = false;
+    }
+}
+
+const removeBonus = setInterval(function(){
+    bonusDespawn();
+}, 4999);
+

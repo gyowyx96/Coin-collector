@@ -74,3 +74,11 @@
 .bomb{
     background-image: url(../image/bomb.png);
 }
+
+.hp{
+    background-image: url(../image/1hp.png);
+}
+
+.time{
+    background-image: url(../image/time-plus.png);
+}
