@@ -28,7 +28,17 @@ for (let i = 0; i < rxc; i++) {
     cells.push(cell)
     grid.appendChild(cell);
 }
-rockGenerator();
+
+//Creazione degli elementi di scena
+for (let i = 0; i <= 10; i++) {
+    let x = Math.floor(Math.random() * cells.length);
+    if (cells[x].classList.length === 0) {
+        cells[x].classList.add('rock');
+    } 
+    else {
+        i--;
+    }
+}
 
 // Inizializzazione del personaggio alla posizione di partenza
 let pgId = cells[pgIndex];
@@ -230,7 +240,7 @@ const gameInterval = setInterval(function(){
 // game over function and alert
 function gameOver(){
     cells.forEach((element, index) => {
-        const classesToRemove = ['coin', 'bomb', 'hp', 'time'];
+        const classesToRemove = ['coin', 'bomb', 'hp', 'time', 'rock'];
         if (index !== pgIndex) {
             classesToRemove.forEach(className => element.classList.remove(className));
         }
@@ -275,14 +285,5 @@ const removeBonus = setInterval(function(){
 }, 4999);
 
 
-function rockGenerator() {
-    for (let i = 0; i <= 10; i++) {
-        let x = Math.floor(Math.random() * cells.length);
-        if (cells[x].classList.length === 0) {
-            cells[x].classList.add('rock');
-        } else {
-            i--;
-        }
-    }
-}
+  
 
