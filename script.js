@@ -28,6 +28,7 @@ for (let i = 0; i < rxc; i++) {
     cells.push(cell)
     grid.appendChild(cell);
 }
+rockGenerator();
 
 // Inizializzazione del personaggio alla posizione di partenza
 let pgId = cells[pgIndex];
@@ -272,4 +273,16 @@ const addBonus = setInterval(function(){
 const removeBonus = setInterval(function(){
     bonusDespawn();
 }, 4999);
+
+
+function rockGenerator() {
+    for (let i = 0; i <= 10; i++) {
+        let x = Math.floor(Math.random() * cells.length);
+        if (cells[x].classList.length === 0) {
+            cells[x].classList.add('rock');
+        } else {
+            i--;
+        }
+    }
+}
 
