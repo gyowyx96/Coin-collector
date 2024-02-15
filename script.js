@@ -82,7 +82,7 @@ function movePg(direction) {
         case 'KeyW':
             pgView = 'pgBack'; 
             animateAndMove('pgUpMove', pgIndex - size >= 0, () => {
-                if (pgIndex - size >= 0) {
+                if (pgIndex - size >= 0 && containRock(pgIndex - size)) {
                     pgIndex -= size; // Muovi il personaggio verso l'alto
                 }
             });
@@ -102,7 +102,7 @@ function movePg(direction) {
         case 'KeyA':
             pgView = 'pgLeft'; 
             animateAndMove('pgLeftMove', pgIndex % size !== 0, () => {
-                if (pgIndex % size !== 0) {
+                if (pgIndex % size !== 0 && !containRock(pgIndex - 1)) {
                     pgIndex -= 1; // Muovi il personaggio verso sinistra
                 }
             });
@@ -112,7 +112,7 @@ function movePg(direction) {
         case 'KeyD':
             pgView = 'pgRight'; 
             animateAndMove('pgRightMove', (pgIndex + 1) % size !== 0, () => {
-                if ((pgIndex + 1) % size !== 0) {
+                if ((pgIndex + 1) % size !== 0 && !containRock(pgIndex + 1)) {
                     pgIndex += 1; // Muovi il personaggio verso destra
                 }
             });
