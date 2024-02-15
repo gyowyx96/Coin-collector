@@ -287,12 +287,6 @@ const removeBonus = setInterval(function(){
 function containRock(futureCell) {
     return futureCell.classList.contains('rock');
 }
-// input
-
-document.addEventListener('DOMContentLoaded', function() {
-    var myInput = document.getElementById('myInput');
-    myInput.focus(); // Attiva il focus sull'elemento di input
-});
 
 
 
