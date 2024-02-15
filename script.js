@@ -284,6 +284,11 @@ const removeBonus = setInterval(function(){
     bonusDespawn();
 }, 4999);
 
+function containRock(futureCell) {
+    return futureCell.classList.contains('rock');
+}
+
+
 
   
 
