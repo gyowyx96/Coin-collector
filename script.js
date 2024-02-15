@@ -92,7 +92,7 @@ function movePg(direction) {
         case 'KeyS':
             pgView = 'pgFront'; 
             animateAndMove('pgDownMove', pgIndex + size < rxc, () => {
-                if (pgIndex + size < rxc) {
+                if (pgIndex + size < rxc && !containRock(pgIndex + size)) {
                     pgIndex += size; // Muovi il personaggio verso il basso
                 }
             });
