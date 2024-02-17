@@ -82,7 +82,7 @@ function movePg(direction) {
         case 'KeyW':
             pgView = 'pgBack'; 
             animateAndMove('pgUpMove', pgIndex - size >= 0, () => {
-                if (pgIndex - size >= 0 && containRock(pgIndex - size)) {
+                if (pgIndex - size >= 0 && !containRock(pgIndex - size)) {
                     pgIndex -= size; // Muovi il personaggio verso l'alto
                 }
             });
@@ -92,7 +92,7 @@ function movePg(direction) {
         case 'KeyS':
             pgView = 'pgFront'; 
             animateAndMove('pgDownMove', pgIndex + size < rxc, () => {
-                if (pgIndex + size < rxc && !containRock(pgIndex + size)) {
+                if (pgIndex + size < rxc  && !containRock(pgIndex + size)) {
                     pgIndex += size; // Muovi il personaggio verso il basso
                 }
             });
@@ -284,7 +284,8 @@ const removeBonus = setInterval(function(){
     bonusDespawn();
 }, 4999);
 
-function containRock(futureCell) {
+function containRock(futureCellIndex) {
+    const futureCell = cells[futureCellIndex];
     return futureCell.classList.contains('rock');
 }
 
