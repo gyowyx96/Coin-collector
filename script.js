@@ -282,7 +282,7 @@ const addBonus = setInterval(function(){
 
 const removeBonus = setInterval(function(){
     bonusDespawn();
-}, 4999);
+}, 5000);
 
 function containRock(futureCellIndex) {
     const futureCell = cells[futureCellIndex];
